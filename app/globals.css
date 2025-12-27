@@ -713,3 +713,507 @@ body {
     opacity: 0.5;
   }
 }
+
+/* ========================================
+   MOBILE NAVIGATION
+   ======================================== */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--notion-sidebar-bg);
+  border-bottom: 1px solid var(--notion-border);
+  z-index: 1000;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--notion-fg);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.mobile-menu-btn:hover {
+  background: var(--notion-sidebar-hover);
+}
+
+.mobile-header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--notion-fg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-music-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  color: var(--notion-fg);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.15s;
+}
+
+.mobile-music-btn.active {
+  color: var(--spotify-primary);
+  background: rgba(29, 185, 84, 0.15);
+}
+
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.sidebar-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile Panel Overlay */
+.panel-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 997;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.panel-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Tablet & Mobile (< 1024px) */
+@media (max-width: 1023px) {
+  .fusion-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .fusion-layout.no-music {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hide resize handle on tablet/mobile */
+  .resize-handle {
+    display: none !important;
+  }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Show mobile header */
+  .mobile-header {
+    display: flex;
+  }
+
+  /* Show overlays */
+  .sidebar-overlay,
+  .panel-overlay {
+    display: block;
+  }
+
+  /* Adjust main layout for fixed header */
+  .fusion-layout {
+    padding-top: 56px;
+    height: 100vh;
+  }
+
+  /* Sidebar Mobile Styles */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    z-index: 1001;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-top: 16px;
+  }
+
+  .sidebar.mobile-visible {
+    transform: translateX(0);
+  }
+
+  /* Editor responsive adjustments */
+  .editor-header {
+    padding: 12px 16px;
+    min-height: 44px;
+  }
+
+  .breadcrumbs {
+    font-size: 12px;
+  }
+
+  .editor-content-wrapper {
+    padding: 20px 16px;
+    max-width: 100%;
+  }
+
+  .page-emoji-large {
+    font-size: 48px;
+    margin-bottom: 8px;
+  }
+
+  .page-title-input {
+    font-size: 28px;
+  }
+
+  .page-content-input {
+    font-size: 15px;
+  }
+
+  /* Music Panel Mobile Styles */
+  .music-panel {
+    position: fixed;
+    top: 56px;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100vw;
+    z-index: 998;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .music-panel.mobile-visible {
+    transform: translateX(0);
+  }
+
+  /* Music panel header updates */
+  .panel-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+
+  .panel-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Quick play grid: single column on mobile */
+  .quick-play-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .quick-play-card {
+    height: auto;
+    min-height: 56px;
+    padding: 10px 12px;
+  }
+
+  /* Song grid mobile */
+  .song-grid {
+    gap: 10px;
+  }
+
+  .song-card {
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    flex-direction: row;
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .song-cover-container {
+    width: 56px;
+    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .song-card>div:last-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .song-title {
+    font-size: 14px;
+  }
+
+  .song-artist {
+    font-size: 12px;
+  }
+
+  /* Lofi grid mobile */
+  .lofi-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .lofi-tile {
+    padding: 12px;
+  }
+
+  .lofi-emoji {
+    font-size: 22px;
+  }
+
+  .lofi-name {
+    font-size: 10px;
+  }
+
+  .lofi-player-container {
+    min-height: 180px;
+  }
+
+  /* Player bar mobile */
+  .player-bar {
+    padding: 10px 12px;
+  }
+
+  .player-cover {
+    width: 44px;
+    height: 44px;
+  }
+
+  .player-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Portfolio section mobile */
+  .editor-content-wrapper img[alt="Gaurav Roy"] {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  /* Skills grid: single column */
+  .skills-grid-mobile {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Small phones (< 375px) */
+@media (max-width: 374px) {
+  .mobile-header {
+    padding: 0 12px;
+  }
+
+  .mobile-header-title {
+    font-size: 14px;
+  }
+
+  .editor-content-wrapper {
+    padding: 16px 12px;
+  }
+
+  .page-title-input {
+    font-size: 24px;
+  }
+
+  .lofi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-play-card {
+    min-height: 52px;
+  }
+
+  .quick-play-cover {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Desktop panel width helper */
+@media (min-width: 768px) {
+  .panel-close-btn {
+    display: none;
+  }
+}
+
+/* ========================================
+   TOUCH OPTIMIZATION FOR MOBILE
+   ======================================== */
+
+/* Remove tap delay and highlight on all touch targets */
+button,
+.sidebar-item,
+.quick-play-card,
+.song-card,
+.lofi-tile,
+.player-btn,
+.mobile-menu-btn,
+.mobile-music-btn,
+.panel-close-btn,
+.add-page-btn,
+.user-profile,
+[role="button"],
+[onclick] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Ensure proper cursor and touch behavior */
+.sidebar-item,
+.quick-play-card,
+.song-card,
+.lofi-tile {
+  cursor: pointer;
+  position: relative;
+}
+
+/* Active states for touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .sidebar-item:active {
+    background: var(--notion-sidebar-hover);
+    transform: scale(0.98);
+  }
+
+  .quick-play-card:active {
+    background: #282828;
+    transform: scale(0.98);
+  }
+
+  .song-card:active {
+    background: #282828;
+    transform: scale(0.98);
+  }
+
+  .lofi-tile:active {
+    transform: scale(0.96);
+  }
+
+  .player-btn:active {
+    transform: scale(0.95);
+  }
+
+  .mobile-menu-btn:active,
+  .mobile-music-btn:active,
+  .panel-close-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(0.95);
+  }
+
+  .add-page-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Ensure music panel content is scrollable and interactive */
+.panel-content {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Ensure proper stacking on mobile */
+@media (max-width: 767px) {
+
+  /* Music panel must be above panel overlay */
+  .music-panel {
+    z-index: 998;
+    pointer-events: auto;
+  }
+
+  .music-panel.mobile-visible {
+    pointer-events: auto;
+  }
+
+  /* Sidebar must be above sidebar overlay */
+  .sidebar {
+    z-index: 1001;
+    pointer-events: auto;
+  }
+
+  .sidebar.mobile-visible {
+    pointer-events: auto;
+  }
+
+  /* Ensure interactive elements inside panels work */
+  .music-panel .quick-play-card,
+  .music-panel .song-card,
+  .music-panel .player-btn,
+  .music-panel .panel-close-btn,
+  .sidebar .sidebar-item,
+  .sidebar .add-page-btn {
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Song play overlay - ensure it doesn't block touch on mobile */
+  .song-play-overlay {
+    pointer-events: none;
+  }
+
+  /* Player progress bar touch */
+  .player-progress {
+    cursor: pointer;
+    touch-action: none;
+  }
+}

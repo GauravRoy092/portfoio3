@@ -1,7 +1,7 @@
 'use client';
 
 import { Song } from '@/types';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, X } from 'lucide-react';
 
 interface MusicPanelProps {
     songs: Song[];
@@ -10,6 +10,9 @@ interface MusicPanelProps {
     progress: number;
     onPlaySong: (song: Song) => void;
     onTogglePlay: () => void;
+    isMobile?: boolean;
+    isMobilePanelOpen?: boolean;
+    onClose?: () => void;
 }
 
 export default function MusicPanel({
@@ -19,16 +22,26 @@ export default function MusicPanel({
     progress,
     onPlaySong,
     onTogglePlay,
+    isMobile = false,
+    isMobilePanelOpen = false,
+    onClose,
 }: MusicPanelProps) {
     return (
-        <div className="music-panel">
+        <div className={`music-panel ${isMobile && isMobilePanelOpen ? 'mobile-visible' : ''}`}>
             {/* Header */}
             <div className="panel-header">
-                <div className="panel-title">
-                    <span>🎵</span>
-                    <span>Music</span>
+                <div>
+                    <div className="panel-title">
+                        <span>🎵</span>
+                        <span>Music</span>
+                    </div>
+                    <div className="panel-subtitle">30-second iTunes previews</div>
                 </div>
-                <div className="panel-subtitle">30-second iTunes previews</div>
+                {isMobile && onClose && (
+                    <button className="panel-close-btn" onClick={onClose} aria-label="Close panel">
+                        <X size={20} />
+                    </button>
+                )}
             </div>
 
             {/* Content */}

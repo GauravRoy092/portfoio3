@@ -1,13 +1,24 @@
-'use client';
-
 import { portfolioData } from '@/content/portfolio';
+import { useEffect, useState } from 'react';
+import { fetchLatestResumeConfig, getResumeUrls } from '@/lib/resume';
 
-export default function PortfolioSection() {
-    const { personalInfo, experience, projects, skills, education, resumeConfig } = portfolioData;
+interface PortfolioSectionProps {
+    isMobile?: boolean;
+}
 
-    const resumeViewUrl = `https://drive.google.com/file/d/${resumeConfig.driveFileId}/view`;
-    const resumeDownloadUrl = `https://drive.google.com/uc?export=download&id=${resumeConfig.driveFileId}`;
-    const resumeEmbedUrl = `https://drive.google.com/file/d/${resumeConfig.driveFileId}/preview`;
+export default function PortfolioSection({ isMobile = false }: PortfolioSectionProps) {
+    const { personalInfo, experience, projects, skills, education, resumeConfig: initialConfig } = portfolioData;
+    const [resumeUrls, setResumeUrls] = useState(getResumeUrls(initialConfig.driveFileId));
+
+    useEffect(() => {
+        const updateResume = async () => {
+            const config = await fetchLatestResumeConfig();
+            setResumeUrls(getResumeUrls(config.driveFileId));
+        };
+        updateResume();
+    }, []);
+
+    const { view: resumeViewUrl, download: resumeDownloadUrl, embed: resumeEmbedUrl } = resumeUrls;
 
     return (
         <main className="editor">
@@ -159,7 +170,7 @@ export default function PortfolioSection() {
 
                 {/* Skills Section */}
                 <div className="section-title">Technical Skills</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '48px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '16px', marginBottom: '48px' }}>
                     {skills.map((skill, idx) => (
                         <div key={idx} style={{ background: 'var(--spotify-surface)', borderRadius: '12px', padding: '20px' }}>
                             <h4 style={{ fontWeight: 700, marginBottom: '12px', color: 'var(--spotify-primary)', fontSize: '14px' }}>{skill.category}</h4>

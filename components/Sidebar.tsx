@@ -16,6 +16,8 @@ interface SidebarProps {
     onToggleLofi: () => void;
     showPortfolio: boolean;
     onShowPortfolio: () => void;
+    isMobile?: boolean;
+    isMobileMenuOpen?: boolean;
 }
 
 export default function Sidebar({
@@ -31,10 +33,12 @@ export default function Sidebar({
     onToggleLofi,
     showPortfolio,
     onShowPortfolio,
+    isMobile = false,
+    isMobileMenuOpen = false,
 }: SidebarProps) {
 
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${isMobile && isMobileMenuOpen ? 'mobile-visible' : ''}`}>
             <div className="sidebar-header">
                 <div className="user-profile">
                     <span className="user-avatar">G</span>

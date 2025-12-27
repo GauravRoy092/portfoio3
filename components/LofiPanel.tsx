@@ -2,9 +2,13 @@
 
 import { useState } from 'react';
 import { LofiStream } from '@/types';
+import { X } from 'lucide-react';
 
 interface LofiPanelProps {
     isVisible: boolean;
+    isMobile?: boolean;
+    isMobilePanelOpen?: boolean;
+    onClose?: () => void;
 }
 
 const lofiStreams: LofiStream[] = [
@@ -16,23 +20,30 @@ const lofiStreams: LofiStream[] = [
     { name: 'coffee shop', emoji: '☕', gradient: 'linear-gradient(135deg, #603813, #b29f94)', url: 'https://www.youtube.com/embed/gaGrHUekGrc?autoplay=1' },
 ];
 
-export default function LofiPanel({ isVisible }: LofiPanelProps) {
+export default function LofiPanel({ isVisible, isMobile = false, isMobilePanelOpen = false, onClose }: LofiPanelProps) {
     const [selected, setSelected] = useState(lofiStreams[0]);
 
     if (!isVisible) return null;
 
     return (
-        <div className="music-panel">
+        <div className={`music-panel ${isMobile && isMobilePanelOpen ? 'mobile-visible' : ''}`}>
             {/* Header */}
             <div className="panel-header">
-                <div className="panel-title">
-                    <span>📻</span>
-                    <span>Lofi Radio</span>
+                <div>
+                    <div className="panel-title">
+                        <span>📻</span>
+                        <span>Lofi Radio</span>
+                    </div>
+                    <div className="panel-subtitle" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{ color: '#1db954', animation: 'pulse 2s infinite' }}>●</span>
+                        24/7 Live Streams
+                    </div>
                 </div>
-                <div className="panel-subtitle" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: '#1db954', animation: 'pulse 2s infinite' }}>●</span>
-                    24/7 Live Streams
-                </div>
+                {isMobile && onClose && (
+                    <button className="panel-close-btn" onClick={onClose} aria-label="Close panel">
+                        <X size={20} />
+                    </button>
+                )}
             </div>
 
             {/* Content */}
