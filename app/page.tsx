@@ -7,6 +7,7 @@ import Editor from '@/components/Editor';
 import MusicPanel from '@/components/MusicPanel';
 import LofiPanel from '@/components/LofiPanel';
 import PortfolioSection from '@/components/PortfolioSection';
+import WebScraperSection from '@/components/WebScraperSection';
 
 export default function Home() {
   // --- Notion State ---
@@ -16,6 +17,7 @@ export default function Home() {
   const [showMusic, setShowMusic] = useState(false);
   const [showLofi, setShowLofi] = useState(false);
   const [showPortfolio, setShowPortfolio] = useState(false);
+  const [showWebScraper, setShowWebScraper] = useState(false);
 
   // --- Spotify State ---
   const [songs, setSongs] = useState<Song[]>([]);
@@ -95,12 +97,20 @@ export default function Home() {
   // --- Portfolio Toggle ---
   const showPortfolioView = () => {
     setShowPortfolio(true);
+    setShowWebScraper(false);
+  };
+
+  // --- Web Scraper Toggle ---
+  const showWebScraperView = () => {
+    setShowWebScraper(true);
+    setShowPortfolio(false);
   };
 
   // --- Select Page (Notion) ---
   const selectPage = (id: string) => {
     setCurrentPageId(id);
     setShowPortfolio(false);
+    setShowWebScraper(false);
   };
 
   // --- Load Pages & Songs ---
@@ -466,6 +476,11 @@ export default function Home() {
             showPortfolioView();
             if (isMobile) setIsMobileMenuOpen(false);
           }}
+          showWebScraper={showWebScraper}
+          onShowWebScraper={() => {
+            showWebScraperView();
+            if (isMobile) setIsMobileMenuOpen(false);
+          }}
           isMobile={isMobile}
           isMobileMenuOpen={isMobileMenuOpen}
         />
@@ -473,6 +488,8 @@ export default function Home() {
         <div className="notion-section">
           {showPortfolio ? (
             <PortfolioSection isMobile={isMobile} />
+          ) : showWebScraper ? (
+            <WebScraperSection isMobile={isMobile} />
           ) : (
             <Editor page={currentPage} onUpdatePage={updatePage} onDeletePage={deletePage} />
           )}

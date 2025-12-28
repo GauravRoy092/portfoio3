@@ -16,6 +16,8 @@ interface SidebarProps {
     onToggleLofi: () => void;
     showPortfolio: boolean;
     onShowPortfolio: () => void;
+    showWebScraper: boolean;
+    onShowWebScraper: () => void;
     isMobile?: boolean;
     isMobileMenuOpen?: boolean;
 }
@@ -33,6 +35,8 @@ export default function Sidebar({
     onToggleLofi,
     showPortfolio,
     onShowPortfolio,
+    showWebScraper,
+    onShowWebScraper,
     isMobile = false,
     isMobileMenuOpen = false,
 }: SidebarProps) {
@@ -105,6 +109,15 @@ export default function Sidebar({
                     <span>FoodPOS</span>
                     <span style={{ marginLeft: 'auto', fontSize: '10px', color: 'var(--spotify-muted)' }}>↗</span>
                 </a>
+                <div
+                    className={`sidebar-item ${showWebScraper ? 'active' : ''}`}
+                    onClick={onShowWebScraper}
+                    style={{ background: showWebScraper ? 'rgba(29, 185, 84, 0.15)' : undefined }}
+                >
+                    <span style={{ fontSize: '16px' }}>🔍</span>
+                    <span>Web Scraper</span>
+                    {showWebScraper && <span style={{ marginLeft: 'auto', fontSize: '10px', color: '#1db954' }}>●</span>}
+                </div>
                 <div
                     className={`sidebar-item ${showMusic && !showLofi ? 'music-active' : ''}`}
                     onClick={onToggleMusic}
